@@ -250,6 +250,23 @@ export class GfHoldingDetailDialogComponent implements OnDestroy, OnInit {
       .subscribe(({ activities }) => {
         this.dataSource = new MatTableDataSource(activities);
 
+        const buyPoints = this.dataSource.data
+          .filter((a) => a.type === 'BUY')
+          .map((a) => ({
+            x: format(new Date(a.date), DATE_FORMAT),
+            y: a.unitPrice
+          }));
+
+        const sellPoints = this.dataSource.data
+          .filter((a) => a.type === 'SELL')
+          .map((a) => ({
+            x: format(new Date(a.date), DATE_FORMAT),
+            y: a.unitPrice
+          }));
+
+        console.log('BUY points for chart:', buyPoints);
+        console.log('SELL points for chart:', sellPoints);
+
         this.changeDetectorRef.markForCheck();
       });
 
