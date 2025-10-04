@@ -4,8 +4,8 @@ import { CreateAssetProfileWithMarketDataDto } from '@ghostfolio/api/app/import/
 import { Activity } from '@ghostfolio/api/app/order/interfaces/activities.interface';
 import { GfDialogFooterComponent } from '@ghostfolio/client/components/dialog-footer/dialog-footer.component';
 import { GfDialogHeaderComponent } from '@ghostfolio/client/components/dialog-header/dialog-header.component';
-import { GfFileDropModule } from '@ghostfolio/client/directives/file-drop/file-drop.module';
-import { GfSymbolModule } from '@ghostfolio/client/pipes/symbol/symbol.module';
+import { GfFileDropDirective } from '@ghostfolio/client/directives/file-drop/file-drop.directive';
+import { GfSymbolPipe } from '@ghostfolio/client/pipes/symbol/symbol.pipe';
 import { DataService } from '@ghostfolio/client/services/data.service';
 import { ImportActivitiesService } from '@ghostfolio/client/services/import-activities.service';
 import { PortfolioPosition } from '@ghostfolio/common/interfaces';
@@ -62,8 +62,8 @@ import { ImportActivitiesDialogParams } from './interfaces/interfaces';
     GfActivitiesTableComponent,
     GfDialogFooterComponent,
     GfDialogHeaderComponent,
-    GfFileDropModule,
-    GfSymbolModule,
+    GfFileDropDirective,
+    GfSymbolPipe,
     IonIcon,
     MatButtonModule,
     MatDialogModule,
