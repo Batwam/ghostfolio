@@ -7,6 +7,7 @@ export interface PortfolioSummary extends PortfolioPerformance {
   annualizedPerformancePercentWithCurrencyEffect: number;
   cash: number;
   committedFunds: number;
+  dateOfFirstActivity: Date;
   dividendInBaseCurrency: number;
   emergencyFund: {
     assets: number;
@@ -20,8 +21,8 @@ export interface PortfolioSummary extends PortfolioPerformance {
   fireWealth: FireWealth;
   grossPerformance: number;
   grossPerformanceWithCurrencyEffect: number;
-  interest: number;
-  liabilities: number;
+  interestInBaseCurrency: number;
+  liabilitiesInBaseCurrency: number;
   totalBuy: number;
   totalSell: number;
   totalValueInBaseCurrency?: number;

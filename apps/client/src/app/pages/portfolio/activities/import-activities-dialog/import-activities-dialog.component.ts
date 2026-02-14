@@ -1,15 +1,16 @@
-import { CreateTagDto } from '@ghostfolio/api/app/endpoints/tags/create-tag.dto';
-import { CreateAccountWithBalancesDto } from '@ghostfolio/api/app/import/create-account-with-balances.dto';
-import { CreateAssetProfileWithMarketDataDto } from '@ghostfolio/api/app/import/create-asset-profile-with-market-data.dto';
-import { Activity } from '@ghostfolio/api/app/order/interfaces/activities.interface';
-import { GfDialogFooterComponent } from '@ghostfolio/client/components/dialog-footer/dialog-footer.component';
-import { GfDialogHeaderComponent } from '@ghostfolio/client/components/dialog-header/dialog-header.component';
 import { GfFileDropDirective } from '@ghostfolio/client/directives/file-drop/file-drop.directive';
-import { GfSymbolPipe } from '@ghostfolio/client/pipes/symbol/symbol.pipe';
-import { DataService } from '@ghostfolio/client/services/data.service';
 import { ImportActivitiesService } from '@ghostfolio/client/services/import-activities.service';
-import { PortfolioPosition } from '@ghostfolio/common/interfaces';
+import {
+  CreateAccountWithBalancesDto,
+  CreateAssetProfileWithMarketDataDto,
+  CreateTagDto
+} from '@ghostfolio/common/dtos';
+import { Activity, PortfolioPosition } from '@ghostfolio/common/interfaces';
+import { GfSymbolPipe } from '@ghostfolio/common/pipes';
 import { GfActivitiesTableComponent } from '@ghostfolio/ui/activities-table';
+import { GfDialogFooterComponent } from '@ghostfolio/ui/dialog-footer';
+import { GfDialogHeaderComponent } from '@ghostfolio/ui/dialog-header';
+import { DataService } from '@ghostfolio/ui/services';
 
 import {
   StepperOrientation,
@@ -346,6 +347,7 @@ export class GfImportActivitiesDialogComponent implements OnDestroy {
                 isDryRun: true,
                 tags: content.tags
               });
+
             this.activities = activities;
             this.dataSource = new MatTableDataSource(activities.reverse());
             this.pageIndex = 0;
@@ -360,15 +362,18 @@ export class GfImportActivitiesDialogComponent implements OnDestroy {
           const content = fileContent.split('\n').slice(1);
 
           try {
-            const data = await this.importActivitiesService.importCsv({
-              fileContent,
-              isDryRun: true,
-              userAccounts: this.data.user.accounts
-            });
-            this.activities = data.activities;
-            this.dataSource = new MatTableDataSource(data.activities.reverse());
+            const { activities, assetProfiles } =
+              await this.importActivitiesService.importCsv({
+                fileContent,
+                isDryRun: true,
+                userAccounts: this.data.user.accounts
+              });
+
+            this.activities = activities;
+            this.assetProfiles = assetProfiles;
+            this.dataSource = new MatTableDataSource(activities.reverse());
             this.pageIndex = 0;
-            this.totalItems = data.activities.length;
+            this.totalItems = activities.length;
           } catch (error) {
             console.error(error);
             this.handleImportError({

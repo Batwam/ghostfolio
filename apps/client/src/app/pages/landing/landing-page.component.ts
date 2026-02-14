@@ -1,9 +1,10 @@
-import { DataService } from '@ghostfolio/client/services/data.service';
 import { Statistics } from '@ghostfolio/common/interfaces';
 import { hasPermission, permissions } from '@ghostfolio/common/permissions';
 import { publicRoutes } from '@ghostfolio/common/routes/routes';
 import { GfCarouselComponent } from '@ghostfolio/ui/carousel';
 import { GfLogoComponent } from '@ghostfolio/ui/logo';
+import { GfLogoCarouselComponent } from '@ghostfolio/ui/logo-carousel';
+import { DataService } from '@ghostfolio/ui/services';
 import { GfValueComponent } from '@ghostfolio/ui/value';
 import { GfWorldMapChartComponent } from '@ghostfolio/ui/world-map-chart';
 
@@ -27,6 +28,7 @@ import { Subject } from 'rxjs';
   imports: [
     CommonModule,
     GfCarouselComponent,
+    GfLogoCarouselComponent,
     GfLogoComponent,
     GfValueComponent,
     GfWorldMapChartComponent,
@@ -125,6 +127,7 @@ export class GfLandingPageComponent implements OnDestroy, OnInit {
     }
 
     this.hasPermissionForDemo = !!demoAuthToken;
+
     this.hasPermissionForStatistics = hasPermission(
       globalPermissions,
       permissions.enableStatistics
